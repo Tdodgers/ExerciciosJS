@@ -1,60 +1,43 @@
+// URL https://sujeitoprogramador.com/rn-api/?api=posts
 
+let listElement = document.querySelector("#app");
 
-let listElement = document.querySelector("#app ul");
-let inputElement = document.querySelector("#app input");
-let buttonElement = document.querySelector("#app button");
+let posts =[];
 
-let tarefas = JSON.parse(localStorage.getItem("@listaTarefas")) || [];
-
-function renderTarefas(){
-   listElement.innerHTML ="";
-   
-   tarefas.map((todo)=>{
-    let liElement = document.createElement("li");
-    let tarefaText = document.createTextNode(todo);
-    let linkElement = document.createElement("a");
-    linkElement.setAttribute("href", "#");
-
-    let linkText = document.createTextNode("Excluir");
-    linkElement.appendChild(linkText);
-
-    let posicao = tarefas.indexOf(todo);
-    linkElement.setAttribute("onclick", `deletarTarefa(${posicao})`);
-
-    liElement.appendChild(tarefaText);
-    liElement.appendChild(linkElement);
-    listElement.appendChild(liElement);
-
-   })
-}
-
-renderTarefas();
-
-function adcionarTarefas(){
-    if(inputElement.value === ''){
-        alert("Digite alguma tarrefa");
-        return false;
+function nutriApp(){
     
-    }else{
-        let novaTarefa = inputElement.value;
+    fetch("https://sujeitoprogramador.com/rn-api/?api=posts")
+    .then((response) => response.json())
+    .then((json) => {
+        posts = json;
 
-        tarefas.push(novaTarefa);
-        inputElement.value = '';
-        
-        renderTarefas();
-        salvarDados();
-    }
+        posts.map((item) => {
+            let liElement = document.createElement("li");
+            let titleElement = document.createElement("strong");
+            let imgElement = document.createElement("img");
+            let descriptionElement = document.createElement("a");
+
+            let titleText = document.createTextNode(item.titulo);
+            titleElement.appendChild(titleText);
+            liElement.append(titleElement);
+
+            imgElement.src = item.capa;
+            liElement.appendChild(imgElement);
+
+            let descriptionText = document.createTextNode(item.subtitulo);
+            descriptionElement.appendChild(descriptionText);
+            liElement.appendChild(descriptionElement);
+
+            listElement.appendChild(liElement);
+
+
+        })
+
+    })
+    .catch(()=>{
+        console.log("Deu algum erro")
+    })
+
 }
 
-buttonElement.onclick = adcionarTarefas;
-
-function deletarTarefa(posicao){
-    tarefas.splice(posicao, 1);
-
-    renderTarefas();
-    salvarDados();
-}
-
-function salvarDados(){
-    localStorage.setItem("@listaTarefas", JSON.stringify(tarefas) );
-}
+nutriApp();
