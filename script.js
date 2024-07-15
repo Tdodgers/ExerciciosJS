@@ -1,60 +1,52 @@
+//Criando lista de produtos
+const produtos = ["Computador", "Telefone", "Mouse", "Teclado"]
 
+console.log('listando todos os produtos: ' + produtos);
 
-let listElement = document.querySelector("#app ul");
-let inputElement = document.querySelector("#app input");
-let buttonElement = document.querySelector("#app button");
+//mostrando quantos produtos tem na lista
+console.log('Quantidade de produtos na lista: ' +produtos.length);
 
-let tarefas = JSON.parse(localStorage.getItem("@listaTarefas")) || [];
+//Retirando Mouse da lista e retornando os produtos restantes
+console.log('tirando produto mouse: ' + produtos.filter(p => p !=='Mouse'));
 
-function renderTarefas(){
-   listElement.innerHTML ="";
-   
-   tarefas.map((todo)=>{
-    let liElement = document.createElement("li");
-    let tarefaText = document.createTextNode(todo);
-    let linkElement = document.createElement("a");
-    linkElement.setAttribute("href", "#");
+//Procurando por determinado produto
+const findProduto = produtos.find(p => p === 'Computador');
 
-    let linkText = document.createTextNode("Excluir");
-    linkElement.appendChild(linkText);
-
-    let posicao = tarefas.indexOf(todo);
-    linkElement.setAttribute("onclick", `deletarTarefa(${posicao})`);
-
-    liElement.appendChild(tarefaText);
-    liElement.appendChild(linkElement);
-    listElement.appendChild(liElement);
-
-   })
+if(findProduto){
+    console.log('Produto Existe na Lista')
+}else{
+    console.log('Produto não existe na Lista')
 }
 
-renderTarefas();
+//Removendo o segundo item da lista
+console.log('Removendo o segundo produto da lista: ' + produtos.splice(1, 1));
+console.log(produtos);
 
-function adcionarTarefas(){
-    if(inputElement.value === ''){
-        alert("Digite alguma tarrefa");
-        return false;
-    
-    }else{
-        let novaTarefa = inputElement.value;
+//Criando lista de numeros
+const numeros = [1,3,5,7,0,9];
+console.log(numeros);
 
-        tarefas.push(novaTarefa);
-        inputElement.value = '';
-        
-        renderTarefas();
-        salvarDados();
-    }
-}
+//ordenando lista
+console.log(numeros.sort());
 
-buttonElement.onclick = adcionarTarefas;
+//removendo o primeiro numero da lista
+console.log(numeros.shift());
 
-function deletarTarefa(posicao){
-    tarefas.splice(posicao, 1);
+//invertendo a ordem da lista
+console.log(numeros.reverse());
 
-    renderTarefas();
-    salvarDados();
-}
+//adicionando um numero a lista
+numeros.push(8);
+console.log(numeros.sort());
 
-function salvarDados(){
-    localStorage.setItem("@listaTarefas", JSON.stringify(tarefas) );
-}
+//Criando uma String com a data de hoje
+
+let hoje = '15/07/2024';
+
+//separando as variaveis de data e mostrando dia, mês e ano
+
+const [dia, mes, ano] = hoje.split('/');
+
+console.log('Dia: '+ dia);
+console.log('Mês: '+ mes);
+console.log('Ano: '+ ano);
